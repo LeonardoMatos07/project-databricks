@@ -1,6 +1,3 @@
-# project-databricks
-
-
 # Projeto de Consultas em Banco de Dados com Python e PostgreSQL
 Este projeto tem como objetivo realizar consultas em um banco de dados PostgreSQL usando Python para responder a algumas perguntas específicas. Serão mostrados os passos para a conexão ao banco de dados e as consultas que respondem às seguintes perguntas:
 
