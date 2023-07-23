@@ -1,4 +1,4 @@
-# Projeto de Consultas em Banco de Dados com Python e PostgreSQL
+# Projeto de Consultas em Banco de Dados com Python e PostgreSQL por meio das ferramentas UIBakery e Databricks
 Este projeto tem como objetivo realizar consultas em um banco de dados PostgreSQL usando Python para responder a algumas perguntas específicas. Serão mostrados os passos para a conexão ao banco de dados e as consultas que respondem às seguintes perguntas:
 
 1 - Qual país possui a maior quantidade de pedidos cancelados?
