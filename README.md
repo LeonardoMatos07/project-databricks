@@ -1,28 +1,27 @@
-# Projeto de Consultas em Banco de Dados com Python e PostgreSQL por meio das ferramentas UIBakery e Databricks
-Este projeto tem como objetivo realizar consultas em um banco de dados PostgreSQL usando Python para responder a algumas perguntas específicas. Serão mostrados os passos para a conexão ao banco de dados e as consultas que respondem às seguintes perguntas:
+# Projeto de Consultas em Banco de Dados com Python e PostgreSQL Por Meio das Ferramentas UIBakery e Databricks
+Este projeto tem como objetivo realizar consultas em um banco de dados PostgreSQL usando Python para responder a algumas perguntas específicas.
+A ferramente UiBakery disponibiliza o acesso a diversos modelos de bases de dados já populadas com dados, para este projeto foi utilizado o modelo de e-commerce.
+O Databricks permite a criação de notebooks no qual pode-se criar códigos em python, sql, R. Um código em python/sql foi criado no notebook do Databricks com o intuito de 
+conectar na base de dados do UiBakery e fazer as consultas necessárias para o projeto.
+
+# Ferramentas Python
+Para conectar a base de dados foi utilizada o módulo do python Psycopg2, no qual são utilizadas as credenciais geradas no UiBakery.
+A subclasse Counter para auxiliar na identificação de maiores repetições.
+O módulo re do python para auxiliar na máscara do email.
+
+
+# Serão mostrados os passos para as consultas que respondem às seguintes perguntas:
 
 1 - Qual país possui a maior quantidade de pedidos cancelados?
 2 - Qual a linha de produto mais vendida e o faturamento total para pedidos realizados no ano de 2005?
 3 - Quais são os nomes, sobrenomes e e-mails dos funcionários que estão no escritório localizado no Japão? Obs: o local-part do e-mail será mascarado por questões de privacidade.
 
 # Configuração do Ambiente
-Antes de executar o código, você precisará configurar o ambiente Python e instalar as bibliotecas necessárias. Certifique-se de ter o Python instalado em seu sistema. Em seguida, execute o seguinte comando para instalar as bibliotecas:
+Antes de executar o código, você precisará configurar o ambiente Python e instalar as bibliotecas necessárias. Certifique-se de ter o Python instalado em seu sistema. Em seguida, execute o seguinte comando para instalar as bibliotecas.
 
-pip install psycopg2 python-dotenv
-
-# Configuração das Variáveis de Ambiente
-O projeto utiliza a biblioteca python-dotenv para carregar as variáveis de ambiente a partir de um arquivo .env. Certifique-se de criar esse arquivo no mesmo diretório do script Python e defina as variáveis de conexão ao banco de dados. O conteúdo do arquivo .env deve ser o seguinte:
-
-DB_HOST=psql-mock-database-cloud.postgres.database.azure.com
-DB_NAME=ecom1689951132216tjuxokympmxdoryr
-DB_USER=lairioimrapffuvvvemlellb@psql-mock-database-cloud
-DB_PASSWORD=lflazvwgonwctugymsgyegmb
-Substitua os valores acima pelos valores de conexão do seu banco de dados PostgreSQL.
 
 # Executando o Código
 Você pode executar o script Python fornecido para obter as respostas para as perguntas específicas. Para isso, basta executar o seguinte comando no terminal:
-
-
 python script.py
 As respostas para as perguntas serão exibidas no console após a execução do script.
 
