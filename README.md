@@ -2,7 +2,7 @@
 Este projeto tem como objetivo realizar consultas em um banco de dados PostgreSQL usando Python para responder a algumas perguntas específicas.
 A ferramenta UiBakery disponibiliza o acesso a diversos modelos de bases de dados já populadas, para este projeto foi utilizado o modelo de e-commerce.
 O Databricks permite a criação de notebooks no qual pode-se criar códigos em python, sql, R. Um código em python/sql foi criado no notebook do Databricks com o intuito de 
-conectar na base de dados do UiBakery e fazer as consultas necessárias para o projeto.
+conectar na base de dados do UiBakery e fazer as consultas necessárias para o projeto e salvar os resultados em formato delta.
 
 # Ferramentas Python
 1 - Para conectar a base de dados foi utilizada o módulo do python Psycopg2, no qual são utilizadas as credenciais geradas no UiBakery.
@@ -40,6 +40,10 @@ Para responder a essa pergunta, o script conecta-se ao banco de dados e executa 
 
 3. Quais são os nomes, sobrenomes e e-mails dos funcionários que estão no escritório localizado no Japão?
 Para responder a essa pergunta, o script conecta-se ao banco de dados e executa uma consulta SQL que retorna os nomes, sobrenomes e e-mails dos funcionários que estão no escritório localizado no Japão. Para proteger a privacidade dos funcionários, o local-part do e-mail é mascarado antes da exibição.
+
+# Salvar Dados em Formato Delta no Apache Spark
+
+O Delta Lake é uma extensão do Apache Spark que proporciona recursos adicionais para o processamento de dados em data lakes, como controle de transações, versionamento de dados e otimizações de leitura e gravação.
 
 # Observações
 Este projeto foi desenvolvido apenas para fins de aprendizado e demonstração. As informações de conexão ao banco de dados e outras credenciais sensíveis foram incluídas apenas para fins de ilustração e não devem ser compartilhadas publicamente. Em ambientes de produção, recomenda-se o uso de práticas de segurança adequadas para proteger as credenciais.
