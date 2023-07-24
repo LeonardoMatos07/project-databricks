@@ -155,7 +155,7 @@ def save_delta(data, schema):
         print("Erro ao salvar dados. " + str(error))
 
 country_repeat = get_country()
-print("The country that had the most canceled orders was " + country_repeat)    
+print("O país com maior número de itens cancelados foi: " + country_repeat)    
 
 line = get_line()
 print("A linha mais vendida foi a " + line[0] + " com faturamento total de: $" + str(line[1]))   
