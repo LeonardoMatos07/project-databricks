@@ -89,7 +89,7 @@ def get_employees():
                 e.email
                 from employees e
                 inner join offices o on o.office_code = e.office_code
-                where o.country = 'Japan'
+                where o.country = 'Japan' and e."job_Title" = 'Sales Rep'
             """ 
         cur = connect()
         cur.execute(sql)
