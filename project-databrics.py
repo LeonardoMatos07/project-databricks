@@ -1,26 +1,20 @@
 import psycopg2
 import re
-from dotenv import load_dotenv
 from collections import Counter
+from pyspark.sql import SparkSession
+from pyspark.sql.types import StructType, StructField, StringType
 
 def get_country():
-    """! Método conectar banco de dados
+    """! Método para obter país com maior quantidade de pedidos cancelados
     """    
-    load_dotenv()
     try:
-        conn = psycopg2.connect(
-            host='psql-mock-database-cloud.postgres.database.azure.com',
-            database='ecom1689951132216tjuxokympmxdoryr',
-            user='lairioimrapffuvvvemlellb@psql-mock-database-cloud',
-            password='lflazvwgonwctugymsgyegmb'
-        )
         sql = """select
                 c.country
                 from orders o
                 inner join customers c on c.customer_number = o.customer_number
                 where o.status = 'Cancelled'
             """ 
-        cur = conn.cursor()
+        cur = connect()
         cur.execute(sql)
         rows = cur.fetchall()
         cur.close()
@@ -30,24 +24,23 @@ def get_country():
             countrys.append(i[0])
 
         contador = Counter(countrys)
-        country, frequencia = contador.most_common(1)[0]    
+        country, frequencia = contador.most_common(1)[0]
+
+        data = [(country,)]
+        schema = StructType([
+            StructField("country", StringType(), True)
+        ])
+        save_delta(data=data, schema=schema)  
+
         return country 
      
     except Exception as error:
-        print("Erro ao conectar banco de dados.")
-
+        print("Erro ao obter informações.")
 
 def get_line():
-    """! Método conectar banco de dados
+    """! Método para obter informações de linha de produto
     """    
-    load_dotenv()
     try:
-        conn = psycopg2.connect(
-            host='psql-mock-database-cloud.postgres.database.azure.com',
-            database='ecom1689951132216tjuxokympmxdoryr',
-            user='lairioimrapffuvvvemlellb@psql-mock-database-cloud',
-            password='lflazvwgonwctugymsgyegmb'
-        )
         sql = """select
                 pd.product_line,
                 p.buy_price
@@ -57,7 +50,7 @@ def get_line():
                 inner join product_lines pd on pd.product_line = p.product_line
                 where o.status = 'Shipped' and o.order_date::TEXT like '2005%'
             """ 
-        cur = conn.cursor()
+        cur = connect()
         cur.execute(sql)
         rows = cur.fetchall()
         cur.close()
@@ -72,23 +65,24 @@ def get_line():
         for n in rows:
             if n[0] == line:
                 value += float(n[1])  
+
+        data = [(line, value)]
+        schema = StructType([
+            StructField("linha", StringType(), True),
+            StructField("faturamento", StringType(), True)
+        ])
+        save_delta(data=data, schema=schema)  
+        
         return line, value 
      
     except Exception as error:
-        print("Erro ao conectar banco de dados.")
-        
-        
-def get_employee():
-    """! Método conectar banco de dados
+        print("Erro ao obter informações")
+
+def get_employees():
+    """! Método para obter informações de vendedores
     """    
-    load_dotenv()
     try:
-        conn = psycopg2.connect(
-            host='psql-mock-database-cloud.postgres.database.azure.com',
-            database='ecom1689951132216tjuxokympmxdoryr',
-            user='lairioimrapffuvvvemlellb@psql-mock-database-cloud',
-            password='lflazvwgonwctugymsgyegmb'
-        )
+    
         sql = """select 
                 e.first_name,
                 e.last_name,
@@ -97,17 +91,19 @@ def get_employee():
                 inner join offices o on o.office_code = e.office_code
                 where o.country = 'Japan'
             """ 
-        cur = conn.cursor()
+        cur = connect()
         cur.execute(sql)
         rows = cur.fetchall()
         cur.close()
 
         employees = []
+        values = []
         for i in rows:
         
             local_part, domain = re.match(r'(.+)@(.+)', i[2]).groups()
             masked_local_part = local_part[0] + '*' * (len(local_part) - 1)
             email = masked_local_part + domain
+            values.append((i[0], i[1], email))
 
             employees.append(
                 {   
@@ -116,18 +112,58 @@ def get_employee():
                     "email": email
                 }
             )
+        data = values
+        schema = StructType([
+            StructField("first_name", StringType(), True),
+            StructField("last_name", StringType(), True),
+            StructField("email", StringType(), True)
+        ])
+        save_delta(data=data, schema=schema)      
         return employees
+     
+    except Exception as error:
+        print("Erro ao obter informações de vendedores.")
+
+def connect():
+    """! Método para conectar banco de dados
+    """    
+    try:
+        conn = psycopg2.connect(
+            host='psql-mock-database-cloud.postgres.database.azure.com',
+            database='ecom1689951132216tjuxokympmxdoryr',
+            user='lairioimrapffuvvvemlellb@psql-mock-database-cloud',
+            password='lflazvwgonwctugymsgyegmb'
+        )
+
+        cur = conn.cursor()
+        return cur
      
     except Exception as error:
         print("Erro ao conectar banco de dados.")
 
+def save_delta(data, schema):
+    """! Método para salvar dados
+    """    
+    try:
+        spark = SparkSession.builder.appName("Salvando em Delta").getOrCreate()
+        df = spark.createDataFrame(data, schema)
+        caminho_delta = "/delta-table"
+        spark.conf.set("spark.databricks.delta.schema.autoMerge.enabled", "true")
+        df.write.format("delta").mode("append").save(caminho_delta)
 
-
-employee = get_employee()
-print(employee)    
-
-line = get_line()
-print("A linha mais vendida foi a " + line[0] + " com faturamento total de: $" + str(line[1]))    
+    except Exception as error:
+        print("Erro ao salvar dados. " + str(error))
 
 country_repeat = get_country()
 print("The country that had the most canceled orders was " + country_repeat)    
+
+line = get_line()
+print("A linha mais vendida foi a " + line[0] + " com faturamento total de: $" + str(line[1]))   
+
+employees = get_employees()
+print("Informações de vendedores do Japão: ")
+for i in employees:
+    print(i)
+ 
+print("Os valores foram salvos em formato Delta.")
+
