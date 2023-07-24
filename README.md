@@ -6,7 +6,9 @@ conectar na base de dados do UiBakery e fazer as consultas necessárias para o p
 
 # Ferramentas Python
 1 - Para conectar a base de dados foi utilizada o módulo do python Psycopg2, no qual são utilizadas as credenciais geradas no UiBakery.
+
 2 - A subclasse Counter para auxiliar na identificação de maiores repetições.
+
 3 - O módulo re do python para auxiliar na máscara do email.
 
 # Lucidchart
