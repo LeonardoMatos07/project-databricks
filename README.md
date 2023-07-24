@@ -14,7 +14,7 @@ conectar na base de dados do UiBakery e fazer as consultas necessárias para o p
 # Lucidchart
 A ferramenta Lucidchart foi utilizada para desenhar o diagrama ER do banco de dados e-commerce disponibilizado pelo UiBakery.
 
-# Serão mostrados os passos para as consultas que respondem às seguintes perguntas:
+# Serão realizadas consultas que respondem às seguintes perguntas:
 
 1 - Qual país possui a maior quantidade de pedidos cancelados?
 
