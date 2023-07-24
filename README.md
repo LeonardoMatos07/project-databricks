@@ -1,6 +1,6 @@
 # Projeto de Consultas em Banco de Dados com Python e PostgreSQL Por Meio das Ferramentas UiBakery e Databricks
 Este projeto tem como objetivo realizar consultas em um banco de dados PostgreSQL usando Python para responder a algumas perguntas específicas.
-A ferramente UiBakery disponibiliza o acesso a diversos modelos de bases de dados já populadas com dados, para este projeto foi utilizado o modelo de e-commerce.
+A ferramenta UiBakery disponibiliza o acesso a diversos modelos de bases de dados já populadas, para este projeto foi utilizado o modelo de e-commerce.
 O Databricks permite a criação de notebooks no qual pode-se criar códigos em python, sql, R. Um código em python/sql foi criado no notebook do Databricks com o intuito de 
 conectar na base de dados do UiBakery e fazer as consultas necessárias para o projeto.
 
