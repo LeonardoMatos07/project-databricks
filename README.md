@@ -28,7 +28,7 @@ Antes de executar o código, você precisará configurar o ambiente Python e ins
 
 # Executando o Código
 Você pode executar o script Python fornecido para obter as respostas para as perguntas específicas. Para isso, basta executar o seguinte comando no terminal:
-python script.py
+python3 project-databricks.py
 As respostas para as perguntas serão exibidas no console após a execução do script.
 
 # Perguntas Respondidas
